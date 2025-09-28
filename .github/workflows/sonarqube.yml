@@ -1,7 +1,7 @@
 name: Sonarcloud scan
 on:
-  # Trigger analysis when pushing to your main branches, and when creating a pull request.
   push:
+  
     branches:
       - main
   pull_request:
@@ -11,14 +11,16 @@ jobs:
   sonarqube:
     runs-on: ubuntu-latest
     steps:
+    
     - uses: actions/checkout@v4
       with:
-        # Disabling shallow clones is recommended for improving the relevancy of reporting
-        fetch-depth: 0
+        fetch-depth: 0  # full history for better analysis
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v6.0.0
-      with:
-        projectKey: HiddenMachine3_activity_3
-        organization: hiddenmachine3
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectKey=HiddenMachine3_activity_3
+          -Dsonar.organization=hiddenmachine3
+          -Dsonar.host.url=https://sonarcloud.io
