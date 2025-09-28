@@ -1,0 +1,26 @@
+name: Sonarcloud scan
+on:
+  push:
+  
+    branches:
+      - main
+  pull_request:
+      types: [opened, synchronize, reopened]
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # full history for better analysis
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v6.0.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectKey=HiddenMachine3_activity_3
+          -Dsonar.organization=hiddenmachine3
+          -Dsonar.host.url=https://sonarcloud.io

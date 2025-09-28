@@ -1,4 +1,4 @@
-name: Running pytest
+name: Pytest run
 
 on:
 
