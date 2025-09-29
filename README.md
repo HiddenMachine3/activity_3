@@ -8,6 +8,8 @@
 
 ![Secrets Scan](https://github.com/HiddenMachine3/activity_3/actions/workflows/secrets_scan.yml/badge.svg)
 
+![GCR Deploy](https://github.com/HiddenMachine3/activity_3/actions/workflows/gcr_deploy.yml/badge.svg)
+
 url of hosted version : https://activity-3-670473745035.asia-south1.run.app/
 
 
@@ -49,14 +51,24 @@ The CI/CD pipeline is configured using GitHub Actions and is defined in the `.gi
     -   **Trigger**: Runs on every push and pull request.
     -   **Action**: Uses `Gitleaks` to scan the repository's history for any hardcoded secrets or sensitive credentials. This helps prevent accidental exposure of secrets.
 
+5.  **Continuous Deployment (`gcr_deploy.yml`)**:
+    -   **Trigger**: Runs on every push to the `main` branch.
+    -   **Action**: Automates the deployment of the application to Google Cloud Run. It builds the Docker image, pushes it to Google Container Registry, and deploys the new version.
+
 
 ## Challenges and Assumptions
 
 ### Challenges
--   **SonarCloud Configuration**: The initial setup for SonarCloud required careful configuration of the project key, organization, and the `SONAR_TOKEN` secret to ensure the scanner could authenticate and push the analysis results correctly.
--   **Workflow Triggers**: Defining the correct triggers (`on: push`, `on: pull_request`) for each job was important to create a balanced pipeline that provides timely feedback without being excessively noisy or resource-intensive.
+-   **Google Cloud Deployment**: Setting up the automated deployment required creating a service account with the correct permissions (IAM roles) was a bit of a pain. Outdated guides and rarity of upto date info on how to integrate this in github actions was a bit of a challenge, but with a bit of trial and error, it was possible. 
 
 ### Assumptions
 -   The project has already been hosted on GitHub, and GitHub Actions is the chosen CI/CD platform.
 -   A SonarCloud account has been created and linked to the GitHub repository.
--   The necessary secrets (`SONAR_TOKEN`) have been configured in the repository's "Secrets and variables" settings for the Actions to use. The `GITHUB_TOKEN` is automatically provided by GitHub.
+-   The necessary secrets (`SONAR_TOKEN`, `GCP_SA_KEY`) have been configured in the repository's "Secrets and variables" settings for the Actions to use. The `GITHUB_TOKEN` is automatically provided by GitHub.
+-   A Google Cloud service account has been created and its JSON key is stored in the `GCP_SA_KEY` secret. The service account has been granted the following IAM roles to allow it to build and deploy the application:
+    -   Artifact Registry Reader
+    -   Artifact Registry Writer
+    -   Service Account User
+    -   Service Usage Admin
+    -   Cloud Build Editor
+    -   Cloud Run Admin
