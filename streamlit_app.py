@@ -9,9 +9,10 @@ st.markdown("""<style>.stApp { background-color: red; }</style>""", unsafe_allow
 a = st.number_input("a:", value=0)
 b = st.number_input("b:", value=0)
 operator = st.selectbox("operator:", ["+", "-", "*"])
-result = 0
+
 
 if st.button("Equals"):
+    result = 0
     if operator == "+":
         result = add(a, b)
     elif operator == "-":
