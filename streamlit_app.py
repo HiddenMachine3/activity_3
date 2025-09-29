@@ -12,11 +12,11 @@ operator = st.selectbox("operator:", ["+", "-", "*"])
 
 
 if st.button("Equals"):
-    result = 0
+    RESULT = 0
     if operator == "+":
-        result = add(a, b)
+        RESULT = add(a, b)
     elif operator == "-":
-        result = sub(a, b)
+        RESULT = sub(a, b)
     elif operator == "*":
-        result = mult(a, b)
-    st.write(f"Result: {result}")
+        RESULT = mult(a, b)
+    st.write(f"Result: {RESULT}")
