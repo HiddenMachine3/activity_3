@@ -1,3 +1,5 @@
+# built-in Pylint workflow template provided by GitHub Actions found on the actions tab of the repository
+
 name: Pylint
 
 on: [push]
