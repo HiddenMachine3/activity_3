@@ -1,20 +1,23 @@
-from funcs import *
+"""
+A simple command line calculator.
+"""
+from funcs import add, sub, mult
 
 if __name__ == "__main__":
 
     while True:
         print("1. add\n2. sub\n3. mult\n4. exit")
-    
+
         op = int(input())
 
-        if op==4:
+        if op == 4:
             print("exiting")
             break
 
-        elif op not in [1,2,3]:
+        if op not in [1, 2, 3]:
             print("invalid")
             continue
-        
+
         print("a : ", end="")
         a = int(input())
         print("b : ", end="")
